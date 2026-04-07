@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GINGIGAGUE - Contact</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #e9e9e9;
+      color: #111;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background-color: #e6e6e6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0px 40px;
+      background-color: #dcdcdc;
+      height: 126px;
+    }
+
+
+    .logo {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      color: #111;
+      background-color: #ededed;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s ease;
+    }
+
+    .nav-buttons a:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-buttons a:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Top contact section */
+    .contact-top {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: stretch;      
+      background-color: #ebebeb;
+      height: 444px;
+    }
+
+    .contact-image img {
+      width: 790px;
+      height: 444px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.35;
+    }
+
+    .contact-form-wrapper {
+      padding: 15px 56px 28px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .contact-form-box {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .contact-form-box h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      border: 1px solid #9a9a9a;
+      background-color: transparent;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      color: #333;
+      padding: 8px 12px;
+      outline: none;
+    }
+
+    .contact-form input {
+      height: 30px;
+      max-width: 360px;
+    }
+
+    .contact-form textarea {
+      height: 160px;
+      resize: none;
+      max-width: 520px;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #8d8d8d;
+    }
+
+    /* Bottom info section */
+    .contact-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      background-color: #eceef3;
+      padding: 72px 94px 110px;
+      height: 382px;
+    }
+
+    .info-block h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 26px;
+      color: #111;
+    }
+
+    .info-block p,
+    .info-block li {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 26px;
+      line-height: 1.45;
+      color: #111;
+    }
+
+    .channels-list {
+      padding-left: 65px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #e1e1e1;
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-size: 18px;
+      color: #444;
+      padding: 30px 20px 26px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .logo {
+        font-size: 48px;
+      }
+
+      .contact-top {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form-wrapper {
+        padding: 36px 28px 42px;
+      }
+
+      .contact-bottom {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 56px 32px 72px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        height: auto;
+        padding: 20px 24px;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .logo {
+        font-size: 38px;
+        text-align: center;
+      }
+
+      .nav-buttons {
+        gap: 16px;
+      }
+
+      .nav-buttons a {
+        font-size: 20px;
+        padding: 12px 24px;
+      }
+
+      .contact-form-box h1 {
+        font-size: 38px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        font-size: 20px;
+      }
+
+      .contact-form input {
+        max-width: 100%;
+      }
+
+      .contact-form textarea {
+        max-width: 100%;
+      }
+
+      .info-block h2 {
+        font-size: 34px;
+      }
+
+      .info-block p,
+      .info-block li {
+        font-size: 22px;
+      }
+
+      .footer {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="navbar">
+      <div class="logo">GINGIGAUGE</div>
+      <nav class="nav-buttons">
+        <a href="home.html">Home</a>
+        <a href="about.html">About Us</a>
+      </nav>                  
+    </header>
+
+    <section class="contact-top">
+      <div class="contact-image">
+        <img src="images/Smile.png" alt="Smiling teeth">
+      </div>
+
+      <div class="contact-form-wrapper">
+        <div class="contact-form-box">
+          <h1>Contact Us</h1>
+
+          <form class="contact-form">
+            <input type="text" placeholder="First Name" />
+            <input type="text" placeholder="Last Name" />
+            <input type="email" placeholder="Email" />
+            <input type="text" placeholder="Subject" />
+            <textarea placeholder="Message"></textarea>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-bottom">
+      <div class="info-block">
+        <h2>Address</h2>
+        <p>
+          Faculty of Engineering, Chulalongkorn University,<br>
+          Phayathai Road<br>
+          Pathumwan, Bangkok, Thailand 10330
+        </p>
+      </div>
+
+      <div class="info-block">
+        <h2>Contact Channels</h2>
+        <ul class="channels-list">
+          <li>Email : gingigage.inquiry@gmail.com</li>
+          <li>Facebook : gingigage.official</li>
+          <li>Instagram : gingigage.official</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      A collaborative project between the Faculty of Engineering and the Faculty of Dentistry, Chulalongkorn University
+    </footer>
+  </div>
+</body>
+</html>
