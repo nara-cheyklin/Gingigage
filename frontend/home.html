@@ -4,364 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GINGIGAUGE</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #e9e9e9;
-      color: #111;
-    }
-
-    .page {
-      width: 100%;
-      min-height: 100vh;
-      background-color: #e6e6e6;
-    }
-
-    /* Top bar */
-    .navbar {
-      background-color: #dcdcdc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 40px;
-      height: 126px;
-    }
-
-    .logo {
-      font-size: 64px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 24px;
-    }
-
-    .nav-buttons a {
-      text-decoration: none;
-      background-color: #ededed;
-      color: #111;
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-size: 16px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-      transition: 0.2s ease;
-    }
-
-    .nav-buttons a:hover {
-      transform: scale(1.05);
-    }
-
-    .nav-buttons a:active {
-      transform: scale(0.95);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 36px 20px 60px;
-      background-color: #efefef;
-    }
-
-    .hero h1 {
-      font-size: 64px;
-      font-weight: 900;
-      margin-bottom: 18px;
-    }
-
-    .hero p {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      margin-bottom: 28px;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 22px;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 10px;
-      padding: 14px 24px;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-dark {
-      background-color: #000;
-      color: #fff;
-    }
-
-    .btn-light {
-      background-color: #dddddd;
-      color: #111;
-    }
-
-    /* Upload Popup */
-    .upload-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.35);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .upload-modal-content {
-      width: 360px;
-      background-color: #ffffff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      position: relative;
-      text-align: center;
-    }
-
-    .upload-modal-content h2 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-
-    .upload-modal-content p {
-      margin-bottom: 16px;
-      color: #666;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .close-upload {
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      border: none;
-      background: transparent;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .file-input {
-      width: 100%;
-      margin: 10px 0 12px;
-      font-size: 14px;
-    }
-
-    .selected-file {
-      min-height: 20px;
-      font-size: 14px;
-      color: #444;
-      margin-bottom: 18px;
-      word-break: break-word;
-    }
-
-    .upload-modal-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .modal-btn {
-      border: none;
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .modal-btn:hover {
-      transform: scale(1.04);
-    }
-
-    .modal-btn:active {
-      transform: scale(0.97);
-    }
-
-    .cancel-btn {
-      background-color: #dddddd;
-      color: #111;
-    }
-
-    .confirm-btn {
-      background-color: #000;
-      color: #fff;
-    }
-
-    /* Info section */
-    .info-section {
-      background-color: #e9e9e9;
-      padding: 64px 70px 40px;
-    }
-
-    .info-content {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 60px;
-    }
-
-    .info-text {
-      flex: 1;
-      max-width: 480px;
-    }
-
-    .info-text h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    .info-text p {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 22px;
-      line-height: 1.45;
-      color: #6a6a6a;
-      margin-bottom: 28px;
-    }
-
-    .read-more {
-      display: flex;
-      background-color: #666;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 22px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-    }
-
-    .read-more:hover {
-      transform: scale(1.05);
-    }
-
-    .read-more:active {
-      transform: scale(0.95);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .image-card {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-
-    .image-card img {
-      width: 100%;
-      max-width: 580px;
-      border-radius: 48px;
-      display: block;
-      object-fit: cover;
-      transform: translateX(100px);
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      font-family: Georgia, "Times New Roman", serif;
-      font-style: italic;
-      font-size: 18px;
-      color: #444;
-      padding: 30px 20px 26px;
-      background-color: #e1e1e1;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .logo {
-        font-size: 40px;
-      }
-
-      .hero h1 {
-        font-size: 52px;
-      }
-
-      .info-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .info-text {
-        max-width: 700px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: 18px;
-        text-align: center;
-      }
-
-      .logo {
-        font-size: 34px;
-      }
-
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      .hero p {
-        font-size: 20px;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .info-section {
-        padding: 48px 24px 30px;
-      }
-
-      .info-text h2 {
-        font-size: 38px;
-      }
-
-      .info-text p {
-        font-size: 20px;
-      }
-
-      .image-card img {
-        border-radius: 28px;
-      }
-
-      .footer {
-        font-size: 15px;
-      }
-
-      .upload-modal-content {
-        width: 90%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="page">
@@ -386,8 +29,8 @@
       <div class="upload-modal-content">
         <button class="close-upload" id="closeUploadPopup">&times;</button>
         <h2>Upload File</h2>
-        <p>Select an image from your local drive.</p>
-        <input type="file" id="fileInput" class="file-input" accept="image/*" />
+        <p>Select a ROS bag file (.bag) from your local drive.</p>
+        <input type="file" id="fileInput" class="file-input" accept=".bag,application/octet-stream,application/x-bag" />
         <div class="selected-file" id="selectedFileName">No file selected</div>
         <div class="upload-modal-actions">
           <button class="modal-btn cancel-btn" id="cancelUpload">Cancel</button>
@@ -395,6 +38,22 @@
         </div>
       </div>
     </div>
+
+      <!-- Result + Export Panel -->
+  <div id="exportContainer" style="display:none; text-align:center; padding:20px;">
+    <img id="outputImage" src="" alt="KGW Result" style="max-width:100%; margin-bottom:16px;" />
+    <table style="margin:0 auto 16px; border-collapse:collapse;">
+      <tr><th style="padding:6px 12px; border:1px solid #ccc;">KGW</th>
+          <td id="kgwValue" style="padding:6px 12px; border:1px solid #ccc;"></td></tr>
+      <tr><th style="padding:6px 12px; border:1px solid #ccc;">Confidence</th>
+          <td id="confidenceValue" style="padding:6px 12px; border:1px solid #ccc;"></td></tr>
+      <tr><th style="padding:6px 12px; border:1px solid #ccc;">Interpretation</th>
+          <td id="interpretationValue" style="padding:6px 12px; border:1px solid #ccc;"></td></tr>
+    </table>
+    <button id="downloadBtn" class="btn btn-dark">Download (.jpg)</button>
+    <button id="printBtn" class="btn btn-dark" style="margin-left:8px;">Print</button>
+  </div>
+
 
     <section class="info-section">
       <div class="info-content">
@@ -460,17 +119,20 @@
         return;
       }
 
-    const formData = new FormData();
-    formData.append("file", fileInput.files[0]);
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
 
-    const response = await fetch("http://localhost:8000/upload", {
-      method: "POST",
-      body: formData
-    });
+      const response = await fetch("http://localhost:8000/predict", {
+        method: "POST",
+        body: formData
+      });
 
-    const result = await response.json();
-    alert("Uploaded: " + result.filename);
+      const result = await response.json();
+      const imageUrl = "data:image/jpeg;base64," + result.data.image_base64;
+      initExport(imageUrl, result.data);
+      closeModal();
     });
   </script>
+  <script src="export.js"></script>
 </body>
 </html>

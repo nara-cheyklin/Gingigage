@@ -1,11 +1,24 @@
-from pathlib import Path
+# settings.py
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = "model.pth"
 
-UPLOAD_DIR = BASE_DIR / "uploads"
-MODEL_PATH = BASE_DIR / "models" / "model.pth"
+ALLOWED_FILE_TYPES = [
+    "application/octet-stream",
+    "application/x-bag"
+]
 
-ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/jpg"}
+KGW_THRESHOLD_MM = 2.0
 
+# RealSense D405 intrinsics
+# Replace these with your actual calibrated values
+CAMERA_INTRINSICS = {
+    "fx": 430.0,
+    "fy": 430.0,
+    "cx": 320.0,
+    "cy": 240.0
+}
 
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+# Depth scale:
+# If depth image is uint16 in millimeters, use 1.0
+# If depth is in meters, use 1000.0 when converting to mm
+DEPTH_UNIT_SCALE = 1.0

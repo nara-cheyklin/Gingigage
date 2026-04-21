@@ -1,71 +1,47 @@
-# Its job is to:
-# - receive the uploaded image
-# - validate the request
-# - call preprocessing
-# - call quality check
-# - call inference
-# - return a clean JSON response
-
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from backend.services.preprocessing import preprocess_image
-from backend.services.quality_check import validate_image_quality
-from backend.services.inference import run_inference
+import tempfile
+import os
+
 from backend.config.settings import ALLOWED_FILE_TYPES
+from backend.services.rosbag_processing import extract_rgb_and_depth_from_rosbag, cv2_to_bytes
+from backend.services.inference import run_inference
 
 router = APIRouter()
 
-@router.post("/predict")
-async def predict(image: UploadFile = File(...)):
-    # 1. Validate file type
-    if image.content_type not in ALLOWED_FILE_TYPES:
-        raise HTTPException(
-            status_code=400,
-            detail="Unsupported file type. Please upload a JPG or PNG image."
-        )
 
-    # 2. Read uploaded file
-    image_bytes = await image.read()
-    if not image_bytes:
-        raise HTTPException(
-            status_code=400,
-            detail="Uploaded file is empty."
-        )
+def save_temp_file(file: UploadFile):
+    suffix = os.path.splitext(file.filename)[-1]
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        tmp.write(file.file.read())
+        return tmp.name
+
+
+@router.post("/predict")
+async def predict(file: UploadFile = File(...)):
+    if file.content_type not in ALLOWED_FILE_TYPES:
+        raise HTTPException(status_code=400, detail="Invalid file type")
+
+    rosbag_path = save_temp_file(file)
 
     try:
-        # 3. Preprocess image
-        processed_image = preprocess_image(image_bytes)
+        rgb_frame, depth_frame = extract_rgb_and_depth_from_rosbag(rosbag_path)
 
-        # 4. Quality validation
-        quality_result = validate_image_quality(processed_image)
-        if not quality_result["is_valid"]:
-            return {
-                "success": False,
-                "stage": "quality_check",
-                "message": "Image quality is insufficient for reliable analysis.",
-                "issues": quality_result["issues"]
-            }
+        image_bytes = cv2_to_bytes(rgb_frame)
 
-        # 5. Run inference
-        inference_result = run_inference(processed_image)
+        result = run_inference(
+            image_bytes=image_bytes,
+            depth_map=depth_frame
+        )
 
-        # 6. Return structured response
         return {
             "success": True,
-            "stage": "completed",
-            "message": "Prediction completed successfully.",
-            "data": {
-                "kgw_mm": inference_result["kgw_mm"],
-                "confidence": inference_result["confidence"],
-                "interpretation": inference_result["interpretation"],
-                "overlay_url": inference_result.get("overlay_url")
-            }
+            "data": result
         }
 
-    except HTTPException:
-        raise
-
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Internal server error: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=str(e))
+
+    finally:
+        if os.path.exists(rosbag_path):
+            os.remove(rosbag_path)

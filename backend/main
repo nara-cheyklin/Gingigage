@@ -1,26 +1,6 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from routes.predict import router
 
-from backend.routes.predict import router as predict_router
+app = FastAPI(title="Gingigage API")
 
-app = FastAPI(title="GINGIGAGE Backend API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # change in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(predict_router)
-
-
-@app.get("/")
-def root():
-    return {"message": "GINGIGAGE backend is running"}
-
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+app.include_router(router)
