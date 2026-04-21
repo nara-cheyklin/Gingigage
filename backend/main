@@ -1,6 +1,0 @@
-from fastapi import FastAPI
-from routes.predict import router
-
-app = FastAPI(title="Gingigage API")
-
-app.include_router(router)
